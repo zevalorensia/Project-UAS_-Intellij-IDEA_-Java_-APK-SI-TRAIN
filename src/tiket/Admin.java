@@ -480,6 +480,14 @@ public class Admin extends javax.swing.JFrame {
             st = con.createStatement();
             st.execute(sql);
             JOptionPane.showMessageDialog(null,"Berhasil");
+            // Update ID setelah hapus
+            String sqlUpdateID = "SET @num := 0";
+            String sqlUpdateID2 = "UPDATE admin SET id = @num := (@num+1) ORDER BY id";
+            String sqlUpdateID3 = "ALTER TABLE admin AUTO_INCREMENT = 1";
+            st.execute(sqlUpdateID);
+            st.execute(sqlUpdateID2);
+            st.execute(sqlUpdateID3);
+
             DefaultTableModel model = (DefaultTableModel) admin.getModel();
             model.setRowCount(0);
             data();
@@ -487,6 +495,7 @@ public class Admin extends javax.swing.JFrame {
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,e);
         }
+
     }//GEN-LAST:event_hapusActionPerformed
 
     private void simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simpanActionPerformed
